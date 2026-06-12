@@ -8,3 +8,6 @@ RUN a2enmod rewrite
 
 # Set document root
 WORKDIR /var/www/html
+
+# Copy application source files into the image
+COPY src/ /var/www/html/
