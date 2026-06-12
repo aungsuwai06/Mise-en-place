@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+
+  # ── PHP / Apache web server ──────────────────────────────
+  web:
+    build: ./php              # Dockerfile lives in ./php/
+    container_name: recipe_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html   # all PHP/CSS/JS source files
+    depends_on:
+      mysql:
+        condition: service_healthy  # wait until MySQL is actually ready
+
+  # ── MySQL 8 database ─────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: recipe_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: user_login
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── phpMyAdmin (optional, dev convenience) ───────────────
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: recipe_phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:
