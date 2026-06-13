@@ -1,15 +1,15 @@
 FROM php:8.2-fpm-alpine
 
-# Install PDO MySQL
+# Install PDO MySQL extension
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Install nginx
-RUN apk add --no-cache nginx
+# Install nginx + bash (bash needed for reliable scripting)
+RUN apk add --no-cache nginx bash
 
-# Create nginx runtime dir
-RUN mkdir -p /run/nginx
+# Create required runtime directories
+RUN mkdir -p /run/nginx /var/log/nginx
 
-# Copy all project files
+# Copy all project files to web root
 COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
 
@@ -17,5 +17,4 @@ RUN chown -R www-data:www-data /var/www/html
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
-# Railway sets $PORT dynamically — start.sh reads it
-CMD ["/start.sh"]
+CMD ["/bin/bash", "/start.sh"]

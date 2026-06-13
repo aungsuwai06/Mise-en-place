@@ -1,8 +1,9 @@
 #!/bin/sh
-# Railway injects $PORT — default to 80 for local
+set -e
+
 PORT=${PORT:-80}
 
-# Write nginx config with the correct port at runtime
+# Write nginx config at runtime with correct PORT
 cat > /etc/nginx/http.d/default.conf << NGINX
 server {
     listen ${PORT};
@@ -27,6 +28,10 @@ server {
 }
 NGINX
 
-# Start php-fpm in background, nginx in foreground
-php-fpm -D
+# Start php-fpm (try different binary names used by Alpine)
+echo "Starting php-fpm..."
+php-fpm8.2 -D 2>/dev/null || php-fpm82 -D 2>/dev/null || php-fpm -D
+sleep 2
+
+echo "Starting nginx on port ${PORT}..."
 exec nginx -g "daemon off;"
