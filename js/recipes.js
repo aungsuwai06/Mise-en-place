@@ -308,16 +308,34 @@ async function doSearch(q) {
 }
 
 /* ── Default meal batch ────────────────────────────────── */
+function getDateSeed() {
+  const today = new Date();
+  return today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+}
+
+function seededRandom(seed) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+/* ── Default load: letter 'b' (a reliable batch of diverse meals) ── */
 async function loadDefaultMeals() {
-  document.getElementById('mealGrid').innerHTML = skeletonCards(8);
-  try {
-    const data  = await api('/search.php?f=b');
-    const meals = (data.meals || []).slice(0, 8);
-    renderGrid(meals, '本日のおすすめ');
-  } catch (err) {
-    console.error('loadDefaultMeals failed:', err);
-    renderGrid([], '本日のおすすめ');
+  const grid = document.getElementById('mealGrid');
+  grid.innerHTML = skeletonCards(8);
+
+  const all = await fetchAllMeals();
+  const seed = getDateSeed();
+
+  const indices = new Set();
+  let i = 0;
+  while (indices.size < 8) {
+    const idx = Math.floor(seededRandom(seed + i) * all.length);
+    indices.add(idx);
+    i++;
   }
+
+  const meals = [...indices].map(idx => all[idx]);
+  renderGrid(meals, '本日のおすすめ');
 }
 
 /* ── Event listeners ───────────────────────────────────── */
