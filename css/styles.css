@@ -48,6 +48,7 @@
 .hero {
   background: var(--ink);
   background-image: url('../pics/cooking.gif');
+  background-color: rgba(26, 22, 18, 0.75);
   background-size: cover;        /* fills the entire div */
   background-position: center;
   background-repeat: no-repeat;
