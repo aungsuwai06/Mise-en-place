@@ -1,9 +1,6 @@
 version: '3.8'
 
-# This docker-compose is for LOCAL development only.
-# Railway deploys using the Dockerfile directly — it does not use docker-compose.
-# Set these environment variables in the Railway dashboard for the web service:
-#   MYSQLHOST, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE, MYSQLPORT
+
 
 services:
   web:
