@@ -57,7 +57,6 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  opacity: var(--ink);
 }
 
 /* Dark overlay so text stays readable */
@@ -65,7 +64,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(26, 22, 18, 0.80);  /* adjust opacity 0.5~0.8 */
+  background: rgba(26, 22, 18, 0.95);  /* adjust opacity 0.5~0.8 */
   z-index: 1;
   pointer-events: none;
 }
