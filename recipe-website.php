@@ -16,7 +16,7 @@ require_once 'functions.php';
     <title>Mise en Place — World Recipes</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="./src/styles.css">
 </head>
 <body>
 
@@ -86,6 +86,6 @@ require_once 'functions.php';
     <?php include("footer.php"); ?>
 </footer>
 
-<script src="js/recipes.js"></script>
+<script src="./src/js/recipes.js"></script>
 </body>
 </html>
