@@ -51,7 +51,11 @@ header {
 
 /* ── Hero ── */
 .hero {
-  background: var(--ink);
+  background-color: var(--ink);
+  background-image: url('pics/cooking.gif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--cream);
   padding: 5rem 2rem 4rem;
   text-align: center;
@@ -59,34 +63,22 @@ header {
   overflow: hidden;
 }
 
-/* GIF — fills the full hero, barely visible behind overlay */
-.bkgdGif {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-  opacity: 0.18;   /* barely visible — change 0.1 (almost hidden) ~ 0.4 (more visible) */
-}
 
 /* Dark overlay — sits on top of gif, below text */
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(26, 22, 18, 0.80);
+  background: rgba(26, 22, 18, 0.75);
   z-index: 1;
   pointer-events: none;
 }
 
-/* Text and search — sits above everything */
 .hero .index {
   position: relative;
   z-index: 2;
 }
+
 
 .hero-eyebrow {
   font-size: 0.72rem;
