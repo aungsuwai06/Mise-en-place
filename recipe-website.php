@@ -25,8 +25,7 @@ require_once 'functions.php';
 </header>
 
 <div class="hero">
-    <!-- GIF background — sits behind the dark overlay and text -->
-    <img src="pics/cooking.gif" alt="" class="bkgdGif">
+   
 
     <div class="index">
         <p class="hero-eyebrow">世界中のレシピ・３００以上</p>
