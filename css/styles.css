@@ -1,5 +1,5 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   :root {
     --ink: #1a1612;
     --ink-mid: #4a3f35;
@@ -14,14 +14,14 @@
     --radius: 4px;
     --radius-lg: 10px;
   }
-
+ 
   body {
     font-family: 'DM Sans', sans-serif;
     background: var(--cream);
     color: var(--ink);
     min-height: 100vh;
   }
-
+ 
   /* ── Header ── */
   header {
     background: var(--ink);
@@ -43,7 +43,7 @@
     text-decoration: none;
   }
   .logo span, .logOut a{ color: var(--gold); font-family: 'Playfair Display', serif; font-style: italic; text-decoration: none;}
-
+ 
   /* ── Hero ── */
   .hero {
     background: var(--ink) ;
@@ -53,12 +53,20 @@
     position: relative;
     overflow: hidden;
   }
-
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* Increase the 'alpha' channel in the rgba value below to darken the overlay */
+    background: radial-gradient(ellipse 70% 60% at 50% 110%, #3d1a0a88 0%, transparent 70%);
+    pointer-events: none;
+}
+ 
   .index{
     z-index:99;
     position: relative;
   }
-
+ 
   .bkgdGif{
     position: absolute;
     inset: 0;
@@ -66,9 +74,9 @@
     height: 100%;
     object-fit:cover;
     z-index: 0;
-    opacity: 0.2;
+    opacity: 0.08;
   }
-
+ 
   .hero::before {
     content: '';
     position: absolute;
@@ -99,7 +107,7 @@
     margin: 0 auto 2.5rem;
     line-height: 1.7;
   }
-
+ 
   /* ── Search bar ── */
   .search-wrap {
     display: flex;
@@ -135,10 +143,10 @@
     transition: background 0.15s;
   }
   .search-wrap button:hover { background: #e0a040; }
-
+ 
   /* ── Main layout ── */
   main { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem 4rem; }
-
+ 
   /* ── Section headings ── */
   .section-head {
     display: flex;
@@ -161,7 +169,7 @@
     color: var(--ink-muted);
     letter-spacing: 0.05em;
   }
-
+ 
   /* ── Category pills ── */
   .categories {
     display: flex;
@@ -193,14 +201,14 @@
     color: var(--cream);
     border-color: var(--ink);
   }
-
+ 
   /* ── Meal grid ── */
   .meal-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1.25rem;
   }
-
+ 
   .meal-card {
     background: var(--white);
     border-radius: var(--radius-lg);
@@ -244,7 +252,7 @@
     content: '⌖ ';
     font-size: 0.7rem;
   }
-
+ 
   /* ── Random badge ── */
   .btn-random {
     display: inline-flex;
@@ -262,7 +270,7 @@
     margin-bottom: 1.5rem;
   }
   .btn-random:hover { background: var(--spice); color: #fff; }
-
+ 
   /* ── Skeleton loader ── */
   .skeleton {
     background: linear-gradient(90deg, var(--cream-dark) 25%, #e8e0d5 50%, var(--cream-dark) 75%);
@@ -280,7 +288,7 @@
   .skel-img { height: 195px; }
   .skel-body { padding: 0.9rem 1rem; }
   .skel-line { height: 12px; border-radius: 6px; margin-bottom: 8px; }
-
+ 
   /* ── Modal overlay ── */
   .modal-bg {
     position: fixed;
@@ -297,7 +305,7 @@
     transition: opacity 0.22s;
   }
   .modal-bg.open { opacity: 1; pointer-events: all; }
-
+ 
   .modal {
     background: var(--cream);
     border-radius: var(--radius-lg);
@@ -309,17 +317,17 @@
     transition: transform 0.22s;
   }
   .modal-bg.open .modal { transform: translateY(0); }
-
+ 
   .modal-hero {
     position: relative;
     height: 400px;
     overflow: hidden;
   }
-
+ 
   .modal-hero.expanded {
     height:auto;
   }
-
+ 
   #expandBtn {
     position: inherit;
     display: flex;
@@ -333,7 +341,7 @@
     border-radius: 4px;
     font-size: 0.75rem;
   }
-
+ 
   .modal-hero img {
     width: 100%;
     height: 100%;
@@ -380,9 +388,9 @@
     z-index: 10;
   }
   .modal-close:hover { background: rgba(26,22,18,0.85); }
-
+ 
   .modal-body { padding: 1.75rem; }
-
+ 
   .modal-meta {
     display: flex;
     flex-wrap: wrap;
@@ -397,7 +405,7 @@
     font-size: 0.8rem;
     color: var(--ink-mid);
   }
-
+ 
   .modal-cols {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -407,7 +415,7 @@
   @media (max-width: 600px) {
     .modal-cols { grid-template-columns: 1fr; }
   }
-
+ 
   .ingredients-list h4, .instructions h4 {
     font-family: 'Playfair Display', serif;
     font-size: 1.05rem;
@@ -416,7 +424,7 @@
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--cream-dark);
   }
-
+ 
   .ingredient-row {
     display: flex;
     align-items: center;
@@ -435,14 +443,14 @@
   }
   .ingredient-name { flex: 1; color: var(--ink); }
   .ingredient-measure { color: var(--ink-muted); font-size: 0.8rem; }
-
+ 
   .instructions p {
     font-size: 0.9rem;
     line-height: 1.8;
     color: var(--ink-mid);
     white-space: pre-line;
   }
-
+ 
   .yt-link {
     display: inline-flex;
     align-items: center;
@@ -458,7 +466,7 @@
     transition: background 0.15s;
   }
   .yt-link:hover { background: #a32d22; }
-
+ 
   /* ── Area section ── */
   .area-grid {
     display: grid;
@@ -481,7 +489,7 @@
   }
   .area-card .flag { font-size: 1.6rem; margin-bottom: 0.3rem; }
   .area-card .name { font-size: 0.8rem; }
-
+ 
   /* ── Empty / error state ── */
   .state-msg {
     text-align: center;
@@ -495,7 +503,7 @@
     margin-bottom: 0.5rem;
     color: var(--ink);
   }
-
+ 
   footer {
     text-align: center;
     padding: 2rem;
