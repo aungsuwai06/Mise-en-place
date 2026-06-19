@@ -45,28 +45,42 @@
   .logo span, .logOut a{ color: var(--gold); font-family: 'Playfair Display', serif; font-style: italic; text-decoration: none;}
  
   /* ── Hero ── */
-  .hero {
-    background: var(--ink) ;
-    color: var(--cream);
-    padding: 4rem 2rem 3rem;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    /* Increase the 'alpha' channel in the rgba value below to darken the overlay */
-    background: radial-gradient(ellipse 70% 60% at 50% 110%, #3d1a0a88 0%, transparent 70%);
-    pointer-events: none;
+  /* ── Hero ── */
+.hero {
+  background: var(--ink);
+  color: var(--cream);
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
- 
-  .index{
-    z-index:99;
-    position: relative;
-  }
- 
+
+/* The GIF styling */
+.bkgdGif {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0; /* Keeps it at the very back */
+  opacity: 0.05; /* Barely visible */
+  pointer-events: none;
+}
+
+/* The Overlay that darkens the GIF */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 22, 18, 0.85); /* Solid dark overlay */
+  z-index: 1; /* Sits on top of the GIF, below the content */
+  pointer-events: none;
+}
+
+.index {
+  z-index: 2; /* Sits on top of everything */
+  position: relative;
+}
   .bkgdGif{
     position: absolute;
     inset: 0;
