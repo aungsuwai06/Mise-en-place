@@ -52,7 +52,7 @@ header {
 /* ── Hero ── */
 .hero {
   background-color: var(--ink);
-  background-image: url('pics/cooking.gif');
+  background-image: url('/pics/cooking.gif');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
