@@ -46,6 +46,7 @@
  
   
   /* ── Hero ── */
+/* ── Hero ── */
 .hero {
   background: var(--ink);
   color: var(--cream);
@@ -55,30 +56,31 @@
   overflow: hidden;
 }
 
-/* The GIF styling */
+/* 1. Ensure the GIF is extremely faint */
 .bkgdGif {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: 0; /* Keeps it at the very back */
-  opacity: 0.02 !important; /* Barely visible */
+  z-index: 0;
+  opacity: 0.03 !important; /* Force a very low opacity */
   pointer-events: none;
 }
 
-/* The Overlay that darkens the GIF */
+/* 2. Replace the gradient with a solid, dark, opaque overlay */
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(26, 22, 18, 0.85); /* Solid dark overlay */
-  z-index: 1; /* Sits on top of the GIF, below the content */
+  /* Use a high-opacity black/ink color to cover the GIF */
+  background: rgba(26, 22, 18, 0.92); 
+  z-index: 1; 
   pointer-events: none;
 }
 
 .index {
-  z-index: 2; /* Sits on top of everything */
+  z-index: 2; /* Ensures text stays visible above the dark mask */
   position: relative;
 }
   .bkgdGif{
