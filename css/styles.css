@@ -44,7 +44,7 @@
   }
   .logo span, .logOut a{ color: var(--gold); font-family: 'Playfair Display', serif; font-style: italic; text-decoration: none;}
  
-  /* ── Hero ── */
+  
   /* ── Hero ── */
 .hero {
   background: var(--ink);
@@ -63,7 +63,7 @@
   height: 100%;
   object-fit: cover;
   z-index: 0; /* Keeps it at the very back */
-  opacity: 0.05; /* Barely visible */
+  opacity: 0.02 !important; /* Barely visible */
   pointer-events: none;
 }
 
