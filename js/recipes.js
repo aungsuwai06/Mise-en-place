@@ -1,10 +1,28 @@
 const BASE = 'https://www.themealdb.com/api/json/v1/1';
 
+/* ── Japanese category name map ── */
+const CAT_JA = {
+  'Beef':         '牛肉',
+  'Chicken':      '鶏肉',
+  'Dessert':      'デザート',
+  'Lamb':         '羊肉',
+  'Miscellaneous':'その他',
+  'Pasta':        'パスタ',
+  'Pork':         '豚肉',
+  'Seafood':      '海鮮',
+  'Side':         'サイドディッシュ',
+  'Starter':      '前菜',
+  'Vegan':        'ヴィーガン',
+  'Vegetarian':   'ベジタリアン',
+  'Breakfast':    '朝食',
+  'Goat':         '山羊肉',
+};
+
 /* ── Flags lookup ── */
 const FLAGS = {
   Afghan:'🇦🇫', Albanian:'🇦🇱', Algerian:'🇩🇿', American:'🇺🇸', Andorran:'🇦🇩',
   Angolan:'🇦🇴', Argentine:'🇦🇷', Armenian:'🇦🇲', Aruban:'🇦🇼', Australian:'🇦🇺',
-  Austrian:'🇦🇹',Azerbaijani:'🇦🇿', Bahamian:'🇧🇸', Bangladeshi:'🇧🇩', Barbadian:'🇧🇧',
+  Austrian:'🇦🇹', Azerbaijani:'🇦🇿', Bahamian:'🇧🇸', Bangladeshi:'🇧🇩', Barbadian:'🇧🇧',
   British:'🇬🇧', Cambodian:'🇰🇭', Canadian:'🇨🇦', Chinese:'🇨🇳', Croatian:'🇭🇷',
   Dutch:'🇳🇱', Egyptian:'🇪🇬', Filipino:'🇵🇭', French:'🇫🇷', Greek:'🇬🇷',
   Indian:'🇮🇳', Irish:'🇮🇪', Italian:'🇮🇹', Jamaican:'🇯🇲', Japanese:'🇯🇵',
@@ -89,27 +107,37 @@ function toggleImage() {
   if (hero) hero.classList.toggle('expanded');
 }
 
-/* ── Load categories ── */
+/* ── Load categories with icons + Japanese names ── */
 async function loadCategories() {
   try {
     const data = await api('/categories.php');
     const cats = data.categories || [];
     const container = document.getElementById('categories');
-    container.innerHTML = `<button class="cat-pill active" data-cat="">All</button>` +
-      cats.map(c=>`
+
+    container.innerHTML =
+      /* "全て" pill — no icon */
+      `<button class="cat-pill active" data-cat="">全て</button>` +
+      cats.map(c => `
         <button class="cat-pill" data-cat="${c.strCategory}">
-          <img src="${c.strCategoryThumb}/small" alt="">
-          ${c.strCategory}
-        </button>`).join('');
+          <img
+            src="${c.strCategoryThumb}"
+            alt="${c.strCategory}"
+            width="20" height="20"
+            style="border-radius:50%;object-fit:cover;flex-shrink:0;"
+            onerror="this.style.display='none'">
+          ${CAT_JA[c.strCategory] || c.strCategory}
+        </button>`
+      ).join('');
 
     container.querySelectorAll('.cat-pill').forEach(btn => {
       btn.addEventListener('click', () => {
-        container.querySelectorAll('.cat-pill').forEach(b=>b.classList.remove('active'));
+        container.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const cat = btn.dataset.cat;
         if (!cat) { loadDefaultMeals(); } else { filterByCategory(cat); }
       });
     });
+
   } catch(err) {
     console.error('loadCategories failed:', err);
   }
@@ -121,7 +149,7 @@ async function filterByCategory(cat) {
   try {
     const all = await fetchAllMeals();
     const meals = all.filter(m => m.strCategory === cat);
-    renderGrid(meals, cat + ' recipes');
+    renderGrid(meals, (CAT_JA[cat] || cat) + ' のレシピ');
   } catch(err) { console.error(err); }
 }
 
@@ -134,7 +162,11 @@ async function fetchAllMeals() {
   );
   const all = results.flat();
   const seen = new Set();
-  const deduped = all.filter(m => { if (seen.has(m.idMeal)) return false; seen.add(m.idMeal); return true; });
+  const deduped = all.filter(m => {
+    if (seen.has(m.idMeal)) return false;
+    seen.add(m.idMeal);
+    return true;
+  });
   window._allMealsCache = deduped;
   return deduped;
 }
@@ -158,8 +190,8 @@ async function loadAreas() {
 
     const validAreas = masterList.filter(a => areaCount[a.strArea] || areaCount[a.strCountry]);
     grid.innerHTML = validAreas.map(a => `
-      <div class="area-card" data-area="${a.strArea}" tabindex="0" role="button" aria-label="Browse ${a.strArea} cuisine">
-        <div class="flag">${FLAGS[a.strArea] || FLAGS[a.strCountry] || '🌍'}</div>
+      <div class="area-card" data-area="${a.strArea}" tabindex="0" role="button">
+        <div class="flag">${FLAGS[a.strArea] || '🌍'}</div>
         <div class="name">${a.strArea}</div>
       </div>`).join('');
 
@@ -193,9 +225,9 @@ async function filterByArea(area) {
 async function loadRandom() {
   document.getElementById('mealGrid').innerHTML = skeletonCards(4);
   try {
-    const promises = Array.from({length:4}, ()=>api('/random.php'));
+    const promises = Array.from({length:4}, () => api('/random.php'));
     const results = await Promise.all(promises);
-    const meals = results.map(r=>r.meals[0]).filter(Boolean);
+    const meals = results.map(r => r.meals[0]).filter(Boolean);
     renderGrid(meals, 'お任せで選びました！');
   } catch(err) { console.error(err); }
 }
@@ -208,13 +240,13 @@ async function doSearch(q) {
   document.getElementById('mealGrid').innerHTML = skeletonCards(6);
   try {
     const data = await api(`/search.php?s=${encodeURIComponent(q.trim())}`);
-    renderGrid(data.meals || [], `Results for "${q.trim()}"`);
+    renderGrid(data.meals || [], `「${q.trim()}」の検索結果`);
     window.scrollTo({top: document.getElementById('spotlightHead').offsetTop - 80, behavior:'smooth'});
   } catch(err) { console.error(err); }
 }
 
-document.getElementById('searchBtn').addEventListener('click', ()=>doSearch(document.getElementById('searchInput').value));
-document.getElementById('searchInput').addEventListener('keydown', e=>{ if(e.key==='Enter') doSearch(e.target.value); });
+document.getElementById('searchBtn').addEventListener('click', () => doSearch(document.getElementById('searchInput').value));
+document.getElementById('searchInput').addEventListener('keydown', e => { if(e.key==='Enter') doSearch(e.target.value); });
 
 /* ── Date-seeded default meals ── */
 function getDateSeed() {
