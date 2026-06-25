@@ -31,10 +31,10 @@ require_once 'functions.php';
         <p class="hero-eyebrow">世界中のレシピ・３００以上</p>
         <h1>自信で <em>料理</em>、<br>誇りで <em>お食事</em></h1>
         <p>世界中の国々のレシピ。品名・カテゴリー・国で検索もお任せにもすることが出来ます。世界中の食文化を楽しみましょう。</p>
-        <div class="search-wrap">
+        <!-- <div class="search-wrap">
             <input type="text" id="searchInput" placeholder="Search a dish — e.g. Pasta, Curry, Tacos…">
             <button id="searchBtn">検索</button>
-        </div>
+        </div> -->
     </div>
 </div>
 
