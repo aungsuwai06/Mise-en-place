@@ -333,15 +333,15 @@ async function doSearch(q) {
   }
 }
 
-document.getElementById('searchBtn')
-  .addEventListener('click', () =>
-    doSearch(document.getElementById('searchInput').value)
-  );
+const searchBtn   = document.getElementById('searchBtn');
+const searchInput = document.getElementById('searchInput');
 
-document.getElementById('searchInput')
-  .addEventListener('keydown', e => {
+if (searchBtn && searchInput) {
+  searchBtn.addEventListener('click', () => doSearch(searchInput.value));
+  searchInput.addEventListener('keydown', e => {
     if (e.key === 'Enter') doSearch(e.target.value);
   });
+}
 
 /* ─────────────────────────────────────────────
    Date-seeded default meals
